@@ -21,7 +21,7 @@ class Product {
     if (json['products'] != null) {
       _products = <ProductsModel>[];
       json['products'].forEach((v) {
-        _products!.add(ProductsModel.fromJson(v));
+        _products.add(ProductsModel.fromJson(v));
       });
     }
   }

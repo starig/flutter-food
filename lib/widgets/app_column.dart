@@ -9,21 +9,23 @@ import 'big_text.dart';
 import 'icon_and_text_widget.dart';
 
 class AppColumn extends StatelessWidget {
-  final String text;
-  const AppColumn({Key? key, required this.text}) : super(key: key);
+  final String productName;
+  final int stars;
+  final int price;
+  const AppColumn({Key? key, required this.productName, required this.stars, required this.price}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BigText(value: text, size: Dimensions.font26,),
+        BigText(value: productName, size: Dimensions.font26,),
         SizedBox(height: Dimensions.height10),
         Row(
           children: [
             Wrap(
               children: List.generate(
-                5,
+                stars,
                     (index) => Icon(
                   Icons.star,
                   color: AppColors.mainColor,
@@ -31,8 +33,18 @@ class AppColumn extends StatelessWidget {
                 ),
               ),
             ),
+            Wrap(
+              children: List.generate(
+                5 - stars,
+                    (index) => Icon(
+                  Icons.star,
+                  color: AppColors.paraColor,
+                  size: 15,
+                ),
+              ),
+            ),
             SizedBox(width: Dimensions.height10),
-            SmallText(value: '5.0'),
+            SmallText(value: stars.toString()),
             SizedBox(width: Dimensions.height10),
             SmallText(value: '1287 comments')
           ],
@@ -42,9 +54,9 @@ class AppColumn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconAndTextWidget(
-                icon: Icons.circle_rounded,
-                text: 'Normal',
-                iconColor: AppColors.iconColor1),
+                icon: Icons.price_check,
+                text: '${price.toString()} \$',
+                iconColor: Colors.lightGreen),
             IconAndTextWidget(
                 icon: Icons.location_on,
                 text: '1.7km',
