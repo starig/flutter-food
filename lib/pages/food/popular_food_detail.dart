@@ -1,19 +1,28 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food/controllers/popular_product_controller.dart';
+import 'package:flutter_food/pages/home/main_food_page.dart';
+import 'package:flutter_food/routes/route_helper.dart';
+import 'package:flutter_food/utils/app_constants.dart';
 import 'package:flutter_food/utils/dimensions.dart';
 import 'package:flutter_food/widgets/app_column.dart';
 import 'package:flutter_food/widgets/app_icon.dart';
 import 'package:flutter_food/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
 
 import '../../utils/colors.dart';
 import '../../widgets/big_text.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+  final int pageId;
+
+  const PopularFoodDetail({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<PopularProductController>().popularProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -26,9 +35,13 @@ class PopularFoodDetail extends StatelessWidget {
               width: double.maxFinite,
               height: Dimensions.popularFoodImgSize,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/image/food1.jpg'))),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(AppConstants.BASE_URL +
+                      AppConstants.UPLOAD_URI +
+                      product.img),
+                ),
+              ),
             ),
           ),
           // Header Icons
@@ -38,8 +51,13 @@ class PopularFoodDetail extends StatelessWidget {
             right: Dimensions.width20,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                AppIcon(icon: Icons.arrow_back_ios_new),
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(RouteHelper.getInitial());
+                  },
+                  child: AppIcon(icon: Icons.arrow_back_ios_new),
+                ),
                 AppIcon(icon: Icons.shopping_cart_outlined),
               ],
             ),
@@ -67,51 +85,24 @@ class PopularFoodDetail extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppColumn(
-                    productName: 'Chinese Side',
-                    price: 12,
-                    stars: 5,
+                    productName: product.name,
+                    price: product.price,
+                    stars: product.stars,
                   ),
                   SizedBox(
                     height: Dimensions.height20,
                   ),
                   BigText(value: 'Introduce'),
-                  SizedBox(height: Dimensions.height20,),
+                  SizedBox(
+                    height: Dimensions.height20,
+                  ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: ExpandableTextWidget(
-                          text: 'Lorem ipsum dolor sit amet,'
-                              ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                              ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                              ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                              'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                              ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                              'eget nulla. Class aptent taciti sociosqu ad litora '
-                              'torquent per conubia nostra, per inceptos himenaeos.'
-                              ' Curabitur sodales ligula in libero. Sed dignissim '
-                              'lacinia nunc. Curabitur tortor.''Lorem ipsum dolor sit amet,'
-                              ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                              ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                              ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                              'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                              ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                              'eget nulla. Class aptent taciti sociosqu ad litora '
-                              'torquent per conubia nostra, per inceptos himenaeos.'
-                              ' Curabitur sodales ligula in libero. Sed dignissim '
-                              'lacinia nunc. Curabitur tortor.''Lorem ipsum dolor sit amet,'
-                              ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                              ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                              ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                              'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                              ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                              'eget nulla. Class aptent taciti sociosqu ad litora '
-                              'torquent per conubia nostra, per inceptos himenaeos.'
-                              ' Curabitur sodales ligula in libero. Sed dignissim '
-                              'lacinia nunc. Curabitur tortor.',
-
+                        text: product.description,
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -173,7 +164,7 @@ class PopularFoodDetail extends StatelessWidget {
                 right: Dimensions.width20,
               ),
               child: BigText(
-                value: '\$10 | Add to Cart',
+                value: '\$${product.price} | Add to Cart',
                 color: Colors.white,
               ),
             )
