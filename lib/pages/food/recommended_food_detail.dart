@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food/controllers/recommended_product_controller.dart';
 import 'package:flutter_food/routes/route_helper.dart';
+import 'package:flutter_food/utils/app_constants.dart';
 import 'package:flutter_food/utils/dimensions.dart';
 import 'package:flutter_food/widgets/app_icon.dart';
 import 'package:flutter_food/widgets/expandable_text_widget.dart';
@@ -11,10 +13,15 @@ import '../../utils/colors.dart';
 import '../../widgets/big_text.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({Key? key}) : super(key: key);
+  final int pageId;
+
+  const RecommendedFoodDetail({Key? key, required this.pageId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -49,7 +56,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     top: Dimensions.height10 / 2, bottom: Dimensions.height10),
                 child: Center(
                     child: BigText(
-                  value: 'Chinese Side',
+                  value: product.name,
                   size: Dimensions.font26,
                 )),
               ),
@@ -58,8 +65,8 @@ class RecommendedFoodDetail extends StatelessWidget {
             expandedHeight: 300,
             backgroundColor: AppColors.yellowColor,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/image/food1.jpg',
+              background: Image.network(
+                AppConstants.BASE_URL + AppConstants.UPLOAD_URI + product.img,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -69,102 +76,13 @@ class RecommendedFoodDetail extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                    child: ExpandableTextWidget(
-                      text: 'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.'
-                          'Lorem ipsum dolor sit amet,'
-                          ' consectetur adipiscing elit. Integer nec odio. Praesent'
-                          ' libero. Sed cursus ante dapibus diam. Sed nisi. Nulla'
-                          ' quis sem at nibh elementum imperdiet. Duis sagittis '
-                          'ipsum. Praesent mauris. Fusce nec tellus sed augue'
-                          ' semper porta. Mauris massa. Vestibulum lacinia arcu '
-                          'eget nulla. Class aptent taciti sociosqu ad litora '
-                          'torquent per conubia nostra, per inceptos himenaeos.'
-                          ' Curabitur sodales ligula in libero. Sed dignissim '
-                          'lacinia nunc. Curabitur tortor.',
-                    ),
                     padding: EdgeInsets.only(
                       left: Dimensions.width20,
                       right: Dimensions.width20,
                       top: Dimensions.height15,
+                    ),
+                    child: ExpandableTextWidget(
+                      text: product.description,
                     ))
               ],
             ),
@@ -191,7 +109,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   iconSize: Dimensions.iconSize24,
                 ),
                 BigText(
-                  value: '\$12.88 X 0',
+                  value: '\$${product.price} X 0',
                   color: AppColors.mainBlackColor,
                   size: Dimensions.font26,
                 ),
@@ -250,7 +168,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     right: Dimensions.width20,
                   ),
                   child: BigText(
-                    value: '\$10 | Add to Cart',
+                    value: '\$${product.price} | Add to Cart',
                     color: Colors.white,
                   ),
                 )
