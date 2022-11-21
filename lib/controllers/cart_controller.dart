@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_food/data/repository/cart_repo.dart';
 import 'package:flutter_food/models/products_model.dart';
 import 'package:get/get.dart';
 
 import '../models/cart_model.dart';
+import '../utils/colors.dart';
 
 class CartController extends GetxController {
   final CartRepo cart;
@@ -14,8 +16,11 @@ class CartController extends GetxController {
   Map<int, CartModel> get items => _items;
 
   void addItem(ProductsModel product, int quantity) {
+    var totalQuantity = 0;
     if (_items.containsKey(product.id!)) {
       _items.update(product.id!, (value) {
+        totalQuantity = value.quantity! + quantity;
+
         return CartModel(
           id: value.id,
           name: value.name,
@@ -26,19 +31,32 @@ class CartController extends GetxController {
           time: DateTime.now().toString(),
         );
       });
+
+      if (totalQuantity <= 0) {
+        _items.remove(product.id);
+      }
     } else {
-      _items.putIfAbsent(product.id!, () {
-        Get.snackbar('Cart', '${product.name} added in');
-        return CartModel(
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          img: product.img,
-          quantity: quantity,
-          isExist: true,
-          time: DateTime.now().toString(),
+      if (quantity > 0) {
+        _items.putIfAbsent(product.id!, () {
+          Get.snackbar('Cart', '${product.name} added in');
+          return CartModel(
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            img: product.img,
+            quantity: quantity,
+            isExist: true,
+            time: DateTime.now().toString(),
+          );
+        });
+      } else {
+        Get.snackbar(
+            'Cart',
+            'You can`t add 0 items to cart',
+            backgroundColor: Colors.redAccent,
+            colorText: AppColors.textColor
         );
-      });
+      }
     }
   }
 
@@ -60,5 +78,19 @@ class CartController extends GetxController {
       });
     }
     return quantity;
+  }
+
+  int get totalItems {
+    var totalQuantity = 0;
+    _items.forEach((key, value) {
+      totalQuantity += value.quantity!;
+    });
+    return totalQuantity;
+  }
+
+  List<CartModel> get getItems {
+    return _items.entries.map((e) {
+      return e.value;
+    }).toList();
   }
 }

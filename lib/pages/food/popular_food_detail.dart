@@ -9,6 +9,7 @@ import 'package:flutter_food/utils/app_constants.dart';
 import 'package:flutter_food/utils/dimensions.dart';
 import 'package:flutter_food/widgets/app_column.dart';
 import 'package:flutter_food/widgets/app_icon.dart';
+import 'package:flutter_food/widgets/cart_button.dart';
 import 'package:flutter_food/widgets/expandable_text_widget.dart';
 import 'package:get/get.dart';
 
@@ -60,7 +61,7 @@ class PopularFoodDetail extends StatelessWidget {
                   },
                   child: AppIcon(icon: Icons.arrow_back_ios_new),
                 ),
-                AppIcon(icon: Icons.shopping_cart_outlined),
+                CartButton()
               ],
             ),
           ),
@@ -182,7 +183,8 @@ class PopularFoodDetail extends StatelessWidget {
                     popularProduct.addItem(product);
                   },
                   child: BigText(
-                    value: '\$${product.price * popularProduct.quantity} | Add to Cart',
+                    value:
+                        '\$${product.price * popularProduct.quantity} | Add to Cart',
                     color: Colors.white,
                   ),
                 ),
