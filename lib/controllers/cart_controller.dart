@@ -29,8 +29,10 @@ class CartController extends GetxController {
           quantity: value.quantity! + quantity,
           isExist: true,
           time: DateTime.now().toString(),
+          product: product
         );
       });
+
 
       if (totalQuantity <= 0) {
         _items.remove(product.id);
@@ -38,7 +40,6 @@ class CartController extends GetxController {
     } else {
       if (quantity > 0) {
         _items.putIfAbsent(product.id!, () {
-          Get.snackbar('Cart', '${product.name} added in');
           return CartModel(
             id: product.id,
             name: product.name,
@@ -47,6 +48,7 @@ class CartController extends GetxController {
             quantity: quantity,
             isExist: true,
             time: DateTime.now().toString(),
+              product: product
           );
         });
       } else {
@@ -58,6 +60,7 @@ class CartController extends GetxController {
         );
       }
     }
+    update();
   }
 
   bool existInCart(ProductsModel product) {
@@ -92,5 +95,14 @@ class CartController extends GetxController {
     return _items.entries.map((e) {
       return e.value;
     }).toList();
+  }
+
+  int get totalAmount {
+    var total=0;
+    _items.forEach((key, value) {
+      total += value.price! * value.quantity!;
+    });
+
+    return total;
   }
 }

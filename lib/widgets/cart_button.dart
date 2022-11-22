@@ -23,35 +23,35 @@ class _CartButtonState extends State<CartButton> {
     return GetBuilder<PopularProductController>(builder: (controller) {
       return GestureDetector(
         onTap: () {
-          Get.toNamed(RouteHelper.getCart());
+          if (controller.totalItems >= 1) Get.toNamed(RouteHelper.getCart());
         },
         child: Stack(
           children: [
             AppIcon(icon: Icons.shopping_cart_outlined),
-            Get.find<PopularProductController>().totalItems >= 1
+            controller.totalItems >= 1
                 ? Positioned(
-              right: 0,
-              top: 0,
-              child: AppIcon(
-                icon: Icons.circle,
-                size: 20,
-                iconColor: Colors.transparent,
-                backgroundColor: AppColors.mainColor,
-              ),
-            )
+                    right: 0,
+                    top: 0,
+                    child: AppIcon(
+                      icon: Icons.circle,
+                      size: 20,
+                      iconColor: Colors.transparent,
+                      backgroundColor: AppColors.mainColor,
+                    ),
+                  )
                 : Container(),
             Get.find<PopularProductController>().totalItems >= 1
                 ? Positioned(
-              right: (Dimensions.width10 / 2),
-              top: (Dimensions.height10 / 5),
-              child: BigText(
-                value: Get.find<PopularProductController>()
-                    .totalItems
-                    .toString(),
-                color: Colors.white,
-                size: 14,
-              ),
-            )
+                    right: (Get.find<PopularProductController>().totalItems >= 10 ? Dimensions.width10 / 10 : Dimensions.width10 / 2),
+                    top: (Dimensions.height10 / 5),
+                    child: BigText(
+                      value: Get.find<PopularProductController>()
+                          .totalItems
+                          .toString(),
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                  )
                 : Container(),
           ],
         ),
